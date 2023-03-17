@@ -1,0 +1,15 @@
+{
+	"name": "skbdf",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned,UserAssigned",
+		"principalId": "23dab87d-8dcf-4b39-8ef0-00db735c482f",
+		"tenantId": "c2969394-122c-490e-a698-ccb1450f9f79",
+		"userAssignedIdentities": {
+			"/subscriptions/9e1fa2d5-dd3f-4d60-8fdd-c989722bea29/resourcegroups/sbari-ciglobal-resource-group/providers/Microsoft.ManagedIdentity/userAssignedIdentities/skbmanagedidentity": {
+				"clientId": "dd1fa193-ab34-4010-bc91-71ef5b63f237",
+				"principalId": "a233963c-466c-4d69-a3ba-e0089524bc21"
+			}
+		}
+	}
+}
