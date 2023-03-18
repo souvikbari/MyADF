@@ -1,0 +1,48 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Excel1",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"name": "sink1"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          Prop_0 as integer '000',",
+				"          Prop_1 as integer '000',",
+				"          Prop_2 as integer '000',",
+				"          Prop_3 as integer '000',",
+				"          Prop_4 as date 'yyyy-MM-dd',",
+				"          Prop_5 as date 'yyyy-MM-dd',",
+				"          Prop_6 as date 'yyyy-MM-dd',",
+				"          Prop_7 as integer '000',",
+				"          Prop_8 as integer '000',",
+				"          Prop_9 as integer '000',",
+				"          Prop_10 as date 'yyyy-MM-dd',",
+				"          Prop_11 as string,",
+				"          Prop_12 as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: true,",
+				"     ignoreNoFilesFound: false,",
+				"     moveFiles: ['','']) ~> source1",
+				"source1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}
