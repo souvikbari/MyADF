@@ -7,7 +7,67 @@
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": [],
+		"schema": [
+			{
+				"name": "AgencyID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "FamilyCode",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "ChildCode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ChildrenStatusID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "RegistrationDate",
+				"type": "date"
+			},
+			{
+				"name": "FieldNotifiedDate",
+				"type": "date"
+			},
+			{
+				"name": "DroppedDate",
+				"type": "date"
+			},
+			{
+				"name": "DroppedReasonID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DroppedReasonSubTypeID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ChildrenID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Birthdate",
+				"type": "date"
+			},
+			{
+				"name": "FirstName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "LastName",
+				"type": "nvarchar"
+			}
+		],
 		"typeProperties": {
 			"schema": "dbo",
 			"table": "Child"
