@@ -27,9 +27,6 @@
 				}
 			],
 			"scriptLines": [
-				"parameters{",
-				"     parameter1 as timestamp (currentTimestamp())",
-				"}",
 				"source(output(",
 				"          AgencyID as string,",
 				"          FamilyCode as string,",
