@@ -515,24 +515,23 @@
 							"name": "sink1"
 						}
 					],
-					"transformations": [
-						{
-							"name": "AlterRow1"
-						}
-					],
+					"transformations": [],
 					"scriptLines": [
+						"parameters{",
+						"     parameter1 as timestamp (currentTimestamp())",
+						"}",
 						"source(output(",
-						"          AgencyID as integer,",
-						"          FamilyCode as integer,",
-						"          ChildCode as integer,",
-						"          ChildrenStatusID as short,",
-						"          RegistrationDate as date,",
-						"          FieldNotifiedDate as date,",
-						"          DroppedDate as date,",
-						"          DroppedReasonID as short,",
-						"          DroppedReasonSubTypeID as short,",
-						"          ChildrenID as integer,",
-						"          Birthdate as date,",
+						"          AgencyID as string,",
+						"          FamilyCode as string,",
+						"          ChildCode as string,",
+						"          ChildrenStatusID as string,",
+						"          RegistrationDate as string,",
+						"          FieldNotifiedDate as string,",
+						"          DroppedDate as string,",
+						"          DroppedReasonID as string,",
+						"          DroppedReasonSubTypeID as string,",
+						"          ChildrenID as string,",
+						"          Birthdate as string,",
 						"          FirstName as string,",
 						"          LastName as string",
 						"     ),",
@@ -540,8 +539,7 @@
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false,",
 						"     moveFiles: ['/INPUT','OUTPUT']) ~> source1",
-						"source1 alterRow(upsertIf(ChildCode==0)) ~> AlterRow1",
-						"AlterRow1 sink(allowSchemaDrift: true,",
+						"source1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
 						"          AgencyID as integer,",
@@ -561,13 +559,10 @@
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
-						"     upsertable:true,",
-						"     keys:['ChildCode'],",
+						"     upsertable:false,",
 						"     format: 'table',",
-						"     dateFormat:'yyyy-MM-dd',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
-						"     saveOrder: 1,",
 						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 					]
 				}
