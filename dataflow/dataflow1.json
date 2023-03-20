@@ -3,11 +3,70 @@
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
-			"sources": [],
-			"sinks": [],
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ExcelInput",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTableOutput",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [],
 			"scriptLines": [
-				""
+				"source(output(",
+				"          AgencyID as string,",
+				"          FamilyCode as string,",
+				"          ChildCode as string,",
+				"          ChildrenStatusID as string,",
+				"          RegistrationDate as string,",
+				"          FieldNotifiedDate as string,",
+				"          DroppedDate as string,",
+				"          DroppedReasonID as string,",
+				"          DroppedReasonSubTypeID as string,",
+				"          ChildrenID as string,",
+				"          Birthdate as string,",
+				"          FirstName as string,",
+				"          LastName as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     moveFiles: ['/INPUT','OUTPUT']) ~> source1",
+				"source1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          AgencyID as integer,",
+				"          FamilyCode as long,",
+				"          ChildCode as integer,",
+				"          ChildrenStatusID as integer,",
+				"          RegistrationDate as date,",
+				"          FieldNotifiedDate as date,",
+				"          DroppedDate as date,",
+				"          DroppedReasonID as integer,",
+				"          DroppedReasonSubTypeID as integer,",
+				"          ChildrenID as integer,",
+				"          Birthdate as date,",
+				"          FirstName as string,",
+				"          LastName as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 			]
 		}
 	}
