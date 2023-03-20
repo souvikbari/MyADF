@@ -1,5 +1,5 @@
 {
-	"name": "Excel1",
+	"name": "ExcelInput",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",

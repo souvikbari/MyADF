@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "pipelineExcel2Database",
 	"properties": {
 		"activities": [
 			{
@@ -199,13 +199,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Excel1",
+						"referenceName": "ExcelInput",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "AzureSqlTable1",
+						"referenceName": "AzureSqlTableOutput",
 						"type": "DatasetReference"
 					}
 				]
