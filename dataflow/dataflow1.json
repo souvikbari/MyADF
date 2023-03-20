@@ -3,40 +3,11 @@
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
-			"sources": [
-				{
-					"dataset": {
-						"referenceName": "ExcelInput",
-						"type": "DatasetReference"
-					},
-					"name": "source1"
-				}
-			],
+			"sources": [],
 			"sinks": [],
 			"transformations": [],
 			"scriptLines": [
-				"parameters{",
-				"     parameter1 as timestamp (currentTimestamp())",
-				"}",
-				"source(output(",
-				"          AgencyID as string,",
-				"          FamilyCode as string,",
-				"          ChildCode as string,",
-				"          ChildrenStatusID as string,",
-				"          RegistrationDate as string,",
-				"          FieldNotifiedDate as string,",
-				"          DroppedDate as string,",
-				"          DroppedReasonID as string,",
-				"          DroppedReasonSubTypeID as string,",
-				"          ChildrenID as string,",
-				"          Birthdate as string,",
-				"          FirstName as string,",
-				"          LastName as string",
-				"     ),",
-				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false,",
-				"     moveFiles: ['/INPUT','OUTPUT']) ~> source1"
+				""
 			]
 		}
 	}
