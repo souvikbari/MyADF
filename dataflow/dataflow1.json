@@ -15,13 +15,17 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "AzureSqlTableOutput",
+						"referenceName": "DelimitedText1",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
 				}
 			],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "split1"
+				}
+			],
 			"scriptLines": [
 				"parameters{",
 				"     parameter1 as timestamp (currentTimestamp())",
@@ -45,32 +49,13 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     moveFiles: ['/INPUT','OUTPUT']) ~> source1",
-				"source1 sink(allowSchemaDrift: true,",
+				"source1 split(year(toDate(RegistrationDate))==2012,",
+				"     disjoint: true) ~> split1@(Year2012, YearOthers)",
+				"split1@Year2012 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     input(",
-				"          AgencyID as integer,",
-				"          FamilyCode as long,",
-				"          ChildCode as integer,",
-				"          ChildrenStatusID as integer,",
-				"          RegistrationDate as date,",
-				"          FieldNotifiedDate as date,",
-				"          DroppedDate as date,",
-				"          DroppedReasonID as integer,",
-				"          DroppedReasonSubTypeID as integer,",
-				"          ChildrenID as integer,",
-				"          Birthdate as date,",
-				"          FirstName as string,",
-				"          LastName as string",
-				"     ),",
-				"     deletable:false,",
-				"     insertable:true,",
-				"     updateable:false,",
-				"     upsertable:false,",
-				"     format: 'table',",
-				"     preSQLs:['TRUNCATE TABLE [dbo].[Child];'],",
+				"     partitionFileNames:['File2012'],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}
