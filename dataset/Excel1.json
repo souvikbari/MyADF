@@ -1,0 +1,76 @@
+{
+	"name": "Excel1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "ChildData.xlsx",
+				"folderPath": "INPUT",
+				"container": "skbcontainer"
+			},
+			"firstRowAsHeader": true,
+			"nullValue": "NULL"
+		},
+		"schema": [
+			{
+				"name": "AgencyID",
+				"type": "String"
+			},
+			{
+				"name": "FamilyCode",
+				"type": "String"
+			},
+			{
+				"name": "ChildCode",
+				"type": "String"
+			},
+			{
+				"name": "ChildrenStatusID",
+				"type": "String"
+			},
+			{
+				"name": "RegistrationDate",
+				"type": "String"
+			},
+			{
+				"name": "FieldNotifiedDate",
+				"type": "String"
+			},
+			{
+				"name": "DroppedDate",
+				"type": "String"
+			},
+			{
+				"name": "DroppedReasonID",
+				"type": "String"
+			},
+			{
+				"name": "DroppedReasonSubTypeID",
+				"type": "String"
+			},
+			{
+				"name": "ChildrenID",
+				"type": "String"
+			},
+			{
+				"name": "Birthdate",
+				"type": "String"
+			},
+			{
+				"name": "FirstName",
+				"type": "String"
+			},
+			{
+				"name": "LastName",
+				"type": "String"
+			}
+		]
+	}
+}
