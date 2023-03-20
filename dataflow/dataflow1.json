@@ -19,6 +19,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTableOutput",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
 				}
 			],
 			"transformations": [
@@ -52,7 +59,33 @@
 				"     validateSchema: false,",
 				"     partitionFileNames:['File2012'],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true) ~> sink1",
+				"split1@YearOthers sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          AgencyID as integer,",
+				"          FamilyCode as long,",
+				"          ChildCode as integer,",
+				"          ChildrenStatusID as integer,",
+				"          RegistrationDate as date,",
+				"          FieldNotifiedDate as date,",
+				"          DroppedDate as date,",
+				"          DroppedReasonID as integer,",
+				"          DroppedReasonSubTypeID as integer,",
+				"          ChildrenID as integer,",
+				"          Birthdate as date,",
+				"          FirstName as string,",
+				"          LastName as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     preSQLs:['TRUNCATE TABLE [dbo].[Child];'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink2"
 			]
 		}
 	}
