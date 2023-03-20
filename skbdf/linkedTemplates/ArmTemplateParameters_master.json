@@ -5,13 +5,13 @@
 		"factoryName": {
 			"value": "skbdf"
 		},
-		"SqlServer1_connectionString": {
-			"value": ""
-		},
 		"AzureBlobStorage1_connectionString": {
 			"value": ""
 		},
 		"AzureSqlDatabase1_connectionString": {
+			"value": ""
+		},
+		"SqlServer1_connectionString": {
 			"value": ""
 		},
 		"containerUri": {
