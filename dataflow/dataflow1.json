@@ -1,0 +1,76 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ExcelInput",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTableOutput",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          AgencyID as integer,",
+				"          FamilyCode as integer,",
+				"          ChildCode as integer,",
+				"          ChildrenStatusID as short,",
+				"          RegistrationDate as date,",
+				"          FieldNotifiedDate as date,",
+				"          DroppedDate as date,",
+				"          DroppedReasonID as short,",
+				"          DroppedReasonSubTypeID as short,",
+				"          ChildrenID as integer,",
+				"          Birthdate as date,",
+				"          FirstName as string,",
+				"          LastName as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     moveFiles: ['/INPUT','OUTPUT']) ~> source1",
+				"source1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          AgencyID as integer,",
+				"          FamilyCode as long,",
+				"          ChildCode as integer,",
+				"          ChildrenStatusID as integer,",
+				"          RegistrationDate as date,",
+				"          FieldNotifiedDate as date,",
+				"          DroppedDate as date,",
+				"          DroppedReasonID as integer,",
+				"          DroppedReasonSubTypeID as integer,",
+				"          ChildrenID as integer,",
+				"          Birthdate as date,",
+				"          FirstName as string,",
+				"          LastName as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['ChildCode'],",
+				"     format: 'table',",
+				"     dateFormat:'yyyy-MM-dd',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 1,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+			]
+		}
+	}
+}
