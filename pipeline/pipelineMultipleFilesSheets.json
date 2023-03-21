@@ -260,8 +260,62 @@
 								},
 								"enableStaging": false,
 								"translator": {
-									"value": "@variables('AgencyID')",
-									"type": "Expression"
+									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"name": "ChildCode",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "ChildCode",
+												"type": "Int32",
+												"physicalType": "int"
+											}
+										},
+										{
+											"source": {
+												"name": "FieldNotifiedDate",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "FieldNotifiedDate",
+												"type": "DateTime",
+												"physicalType": "date"
+											}
+										},
+										{
+											"source": {
+												"name": "LastName",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "LastName",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "EventStatusID",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "EventStatusID",
+												"type": "Int32",
+												"physicalType": "int"
+											}
+										}
+									],
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
 								}
 							},
 							"inputs": [
@@ -310,11 +364,99 @@
 										"enablePartitionDiscovery": false
 									}
 								},
-								"enableStaging": false
+								"sink": {
+									"type": "AzureSqlSink",
+									"writeBehavior": "upsert",
+									"upsertSettings": {
+										"useTempDB": true,
+										"keys": [
+											"ChildCode"
+										]
+									},
+									"sqlWriterUseTableLock": false,
+									"disableMetricsCollection": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"name": "ChildCode",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "ChildCode",
+												"type": "Int32",
+												"physicalType": "int"
+											}
+										},
+										{
+											"source": {
+												"name": "DroppedDate",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "DroppedDate",
+												"type": "DateTime",
+												"physicalType": "date"
+											}
+										},
+										{
+											"source": {
+												"name": "DroppedReasonID",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "DroppedReasonID",
+												"type": "Int32",
+												"physicalType": "int"
+											}
+										},
+										{
+											"source": {
+												"name": "DroppedReasonSubTypeID",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "DroppedReasonSubTypeID",
+												"type": "Int32",
+												"physicalType": "int"
+											}
+										},
+										{
+											"source": {
+												"name": "EventStatusID",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "EventStatusID",
+												"type": "Int32",
+												"physicalType": "int"
+											}
+										}
+									],
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
 							},
 							"inputs": [
 								{
 									"referenceName": "Dropped",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "AzureSqlTable1",
 									"type": "DatasetReference"
 								}
 							]
