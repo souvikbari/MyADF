@@ -211,6 +211,12 @@
 				}
 			}
 		],
+		"variables": {
+			"AgencyID": {
+				"type": "String",
+				"defaultValue": "6631"
+			}
+		},
 		"annotations": []
 	}
 }
