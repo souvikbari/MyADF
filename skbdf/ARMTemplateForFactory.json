@@ -683,6 +683,15 @@
 									"typeProperties": {
 										"source": {
 											"type": "ExcelSource",
+											"additionalColumns": [
+												{
+													"name": "AgencyID",
+													"value": {
+														"value": "@variables('AgencyID')",
+														"type": "Expression"
+													}
+												}
+											],
 											"storeSettings": {
 												"type": "AzureBlobStorageReadSettings",
 												"recursive": true,
