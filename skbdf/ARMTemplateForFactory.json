@@ -839,11 +839,6 @@
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
-				"variables": {
-					"AgencyID": {
-						"type": "String"
-					}
-				},
 				"annotations": []
 			},
 			"dependsOn": [
