@@ -1043,7 +1043,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"items": {
-								"value": "@activity('Get Metadata - Input Folder').output.itemName",
+								"value": "@activity('Get Metadata - Input Folder').output.childItems",
 								"type": "Expression"
 							},
 							"activities": [
