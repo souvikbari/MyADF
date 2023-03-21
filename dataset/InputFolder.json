@@ -1,0 +1,51 @@
+{
+	"name": "InputFolder",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Registration",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "INPUT",
+				"container": "skbcontainer"
+			},
+			"firstRowAsHeader": true,
+			"nullValue": "NULL"
+		},
+		"schema": [
+			{
+				"name": "RegistrationDate",
+				"type": "String"
+			},
+			{
+				"name": "FamilyCode",
+				"type": "String"
+			},
+			{
+				"name": "ChildCode",
+				"type": "String"
+			},
+			{
+				"name": "ChildrenStatusID",
+				"type": "String"
+			},
+			{
+				"name": "Birthdate",
+				"type": "String"
+			},
+			{
+				"name": "FirstName",
+				"type": "String"
+			},
+			{
+				"name": "EventStatusID",
+				"type": "String"
+			}
+		]
+	}
+}
