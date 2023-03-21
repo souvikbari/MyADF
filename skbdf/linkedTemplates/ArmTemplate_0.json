@@ -799,13 +799,7 @@
 										},
 										"sink": {
 											"type": "AzureSqlSink",
-											"writeBehavior": "upsert",
-											"upsertSettings": {
-												"useTempDB": true,
-												"keys": [
-													"ChildCode"
-												]
-											},
+											"writeBehavior": "insert",
 											"sqlWriterUseTableLock": false,
 											"disableMetricsCollection": false
 										},
@@ -813,17 +807,6 @@
 										"translator": {
 											"type": "TabularTranslator",
 											"mappings": [
-												{
-													"source": {
-														"name": "AgencyID",
-														"type": "String"
-													},
-													"sink": {
-														"name": "AgencyID",
-														"type": "Int32",
-														"physicalType": "int"
-													}
-												},
 												{
 													"source": {
 														"name": "FamilyCode",
@@ -904,6 +887,17 @@
 													},
 													"sink": {
 														"name": "EventStatusID",
+														"type": "Int32",
+														"physicalType": "int"
+													}
+												},
+												{
+													"source": {
+														"name": "AgencyID",
+														"type": "String"
+													},
+													"sink": {
+														"name": "AgencyID",
 														"type": "Int32",
 														"physicalType": "int"
 													}
