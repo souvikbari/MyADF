@@ -1,0 +1,21 @@
+{
+	"name": "FieldNotification",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "FieldNotification",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "INPUT",
+				"container": "skbcontainer"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	}
+}

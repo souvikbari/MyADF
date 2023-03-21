@@ -1,9 +1,9 @@
 {
-	"name": "pipelineMultipleFiles",
+	"name": "pipelineMultipleFilesSheets",
 	"properties": {
 		"activities": [
 			{
-				"name": "Get Metadata1",
+				"name": "Get Metadata - Input Folder",
 				"type": "GetMetadata",
 				"dependsOn": [],
 				"policy": {
@@ -30,11 +30,11 @@
 				}
 			},
 			{
-				"name": "ForEach1",
+				"name": "ForEach Folder Level",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Get Metadata1",
+						"activity": "Get Metadata - Input Folder",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -43,12 +43,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Get Metadata1').output.childItems",
+						"value": "@activity('Get Metadata - Input Folder').output.itemName",
 						"type": "Expression"
 					},
 					"activities": [
 						{
-							"name": "Copy data1",
+							"name": "Copy data - Registration",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -58,7 +58,12 @@
 								"secureOutput": false,
 								"secureInput": false
 							},
-							"userProperties": [],
+							"userProperties": [
+								{
+									"name": "Sheet",
+									"value": "Registration"
+								}
+							],
 							"typeProperties": {
 								"source": {
 									"type": "ExcelSource",
@@ -197,7 +202,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "InputFolder",
+									"referenceName": "Registration",
 									"type": "DatasetReference"
 								}
 							],
@@ -207,11 +212,133 @@
 									"type": "DatasetReference"
 								}
 							]
+						},
+						{
+							"name": "Copy data - FieldNotification",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "Copy data - Registration",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Sheet",
+									"value": "FieldNotification"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "ExcelSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									}
+								},
+								"sink": {
+									"type": "AzureSqlSink",
+									"writeBehavior": "upsert",
+									"upsertSettings": {
+										"useTempDB": true,
+										"keys": [
+											"ChildCode"
+										]
+									},
+									"sqlWriterUseTableLock": false,
+									"disableMetricsCollection": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"value": "@variables('AgencyID')",
+									"type": "Expression"
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "FieldNotification",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "AzureSqlTable1",
+									"type": "DatasetReference"
+								}
+							]
+						},
+						{
+							"name": "Copy data - Dropped",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "Copy data - FieldNotification",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Sheet",
+									"value": "Dropped"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "ExcelSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "Dropped",
+									"type": "DatasetReference"
+								}
+							]
 						}
 					]
 				}
 			}
 		],
+		"parameters": {
+			"SheetName": {
+				"type": "array",
+				"defaultValue": [
+					{
+						"SheetName": "Registration"
+					},
+					{
+						"SheetName": "FieldNotification"
+					},
+					{
+						"SheetName": "Dropped"
+					}
+				]
+			}
+		},
 		"variables": {
 			"AgencyID": {
 				"type": "String",

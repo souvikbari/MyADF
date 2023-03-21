@@ -1,0 +1,21 @@
+{
+	"name": "Registration",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Registration",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "INPUT",
+				"container": "skbcontainer"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	}
+}

@@ -1,0 +1,42 @@
+{
+	"name": "Dropped",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Dropped",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "INPUT",
+				"container": "skbcontainer"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "DroppedDate",
+				"type": "String"
+			},
+			{
+				"name": "ChildCode",
+				"type": "String"
+			},
+			{
+				"name": "DroppedReasonID",
+				"type": "String"
+			},
+			{
+				"name": "DroppedReasonSubTypeID",
+				"type": "String"
+			},
+			{
+				"name": "EventStatusID",
+				"type": "String"
+			}
+		]
+	}
+}
