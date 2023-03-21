@@ -47,6 +47,92 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "AgencyID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "FamilyCode",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "ChildCode",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ChildrenStatusID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "RegistrationDate",
+						"type": "date"
+					},
+					{
+						"name": "FieldNotifiedDate",
+						"type": "date"
+					},
+					{
+						"name": "DroppedDate",
+						"type": "date"
+					},
+					{
+						"name": "DroppedReasonID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DroppedReasonSubTypeID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ChildrenID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Birthdate",
+						"type": "date"
+					},
+					{
+						"name": "FirstName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LastName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EventStatusID",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Children"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureSqlTableOutput')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -292,89 +378,102 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+			"name": "[concat(parameters('factoryName'), '/Registration')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase1",
+					"referenceName": "AzureBlobStorage1",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
-				"type": "AzureSqlTable",
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Registration",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "INPUT",
+						"container": "skbcontainer"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FieldNotification')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "FieldNotification",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "INPUT",
+						"container": "skbcontainer"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Dropped')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Dropped",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "INPUT",
+						"container": "skbcontainer"
+					},
+					"firstRowAsHeader": true
+				},
 				"schema": [
 					{
-						"name": "AgencyID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "FamilyCode",
-						"type": "bigint",
-						"precision": 19
+						"name": "DroppedDate",
+						"type": "String"
 					},
 					{
 						"name": "ChildCode",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "ChildrenStatusID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "RegistrationDate",
-						"type": "date"
-					},
-					{
-						"name": "FieldNotifiedDate",
-						"type": "date"
-					},
-					{
-						"name": "DroppedDate",
-						"type": "date"
+						"type": "String"
 					},
 					{
 						"name": "DroppedReasonID",
-						"type": "int",
-						"precision": 10
+						"type": "String"
 					},
 					{
 						"name": "DroppedReasonSubTypeID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "ChildrenID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Birthdate",
-						"type": "date"
-					},
-					{
-						"name": "FirstName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "LastName",
-						"type": "nvarchar"
+						"type": "String"
 					},
 					{
 						"name": "EventStatusID",
-						"type": "int",
-						"precision": 10
+						"type": "String"
 					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "Children"
-				}
+				]
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
 			]
 		},
 		{
@@ -613,105 +712,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "ExcelInput",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "DelimitedText1",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						},
-						{
-							"dataset": {
-								"referenceName": "AzureSqlTableOutput",
-								"type": "DatasetReference"
-							},
-							"name": "sink2"
-						}
-					],
-					"transformations": [
-						{
-							"name": "split1"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          AgencyID as string,",
-						"          FamilyCode as string,",
-						"          ChildCode as string,",
-						"          ChildrenStatusID as string,",
-						"          RegistrationDate as string,",
-						"          FieldNotifiedDate as string,",
-						"          DroppedDate as string,",
-						"          DroppedReasonID as string,",
-						"          DroppedReasonSubTypeID as string,",
-						"          ChildrenID as string,",
-						"          Birthdate as string,",
-						"          FirstName as string,",
-						"          LastName as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false,",
-						"     moveFiles: ['/INPUT','OUTPUT']) ~> source1",
-						"source1 split(year(toDate(RegistrationDate))==2012,",
-						"     disjoint: true) ~> split1@(Year2012, YearOthers)",
-						"split1@Year2012 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     partitionFileNames:['File2012'],",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> sink1",
-						"split1@YearOthers sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          AgencyID as integer,",
-						"          FamilyCode as long,",
-						"          ChildCode as integer,",
-						"          ChildrenStatusID as integer,",
-						"          RegistrationDate as date,",
-						"          FieldNotifiedDate as date,",
-						"          DroppedDate as date,",
-						"          DroppedReasonID as integer,",
-						"          DroppedReasonSubTypeID as integer,",
-						"          ChildrenID as integer,",
-						"          Birthdate as date,",
-						"          FirstName as string,",
-						"          LastName as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     preSQLs:['TRUNCATE TABLE [dbo].[Child];'],",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink2"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ExcelInput')]",
-				"[concat(variables('factoryId'), '/datasets/DelimitedText1')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTableOutput')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/pipelineMultipleFiles')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -740,6 +740,7 @@
 							],
 							"storeSettings": {
 								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
 								"enablePartitionDiscovery": false
 							}
 						}
@@ -944,6 +945,627 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/InputFolder')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ExcelInput",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DelimitedText1",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTableOutput",
+								"type": "DatasetReference"
+							},
+							"name": "sink2"
+						}
+					],
+					"transformations": [
+						{
+							"name": "split1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          AgencyID as string,",
+						"          FamilyCode as string,",
+						"          ChildCode as string,",
+						"          ChildrenStatusID as string,",
+						"          RegistrationDate as string,",
+						"          FieldNotifiedDate as string,",
+						"          DroppedDate as string,",
+						"          DroppedReasonID as string,",
+						"          DroppedReasonSubTypeID as string,",
+						"          ChildrenID as string,",
+						"          Birthdate as string,",
+						"          FirstName as string,",
+						"          LastName as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     moveFiles: ['/INPUT','OUTPUT']) ~> source1",
+						"source1 split(year(toDate(RegistrationDate))==2012,",
+						"     disjoint: true) ~> split1@(Year2012, YearOthers)",
+						"split1@Year2012 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     partitionFileNames:['File2012'],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink1",
+						"split1@YearOthers sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          AgencyID as integer,",
+						"          FamilyCode as long,",
+						"          ChildCode as integer,",
+						"          ChildrenStatusID as integer,",
+						"          RegistrationDate as date,",
+						"          FieldNotifiedDate as date,",
+						"          DroppedDate as date,",
+						"          DroppedReasonID as integer,",
+						"          DroppedReasonSubTypeID as integer,",
+						"          ChildrenID as integer,",
+						"          Birthdate as date,",
+						"          FirstName as string,",
+						"          LastName as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     preSQLs:['TRUNCATE TABLE [dbo].[Child];'],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink2"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ExcelInput')]",
+				"[concat(variables('factoryId'), '/datasets/DelimitedText1')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTableOutput')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipelineMultipleFilesSheets')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Get Metadata - Input Folder",
+						"type": "GetMetadata",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "InputFolder",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"childItems"
+							],
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							}
+						}
+					},
+					{
+						"name": "ForEach Folder Level",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Get Metadata - Input Folder",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Get Metadata - Input Folder').output.itemName",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Copy data - Registration",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [
+										{
+											"name": "Sheet",
+											"value": "Registration"
+										}
+									],
+									"typeProperties": {
+										"source": {
+											"type": "ExcelSource",
+											"additionalColumns": [
+												{
+													"name": "AgencyID",
+													"value": {
+														"value": "@variables('AgencyID')",
+														"type": "Expression"
+													}
+												}
+											],
+											"storeSettings": {
+												"type": "AzureBlobStorageReadSettings",
+												"recursive": true,
+												"wildcardFolderPath": "INPUT",
+												"wildcardFileName": {
+													"value": "@item().name",
+													"type": "Expression"
+												},
+												"enablePartitionDiscovery": false
+											}
+										},
+										"sink": {
+											"type": "AzureSqlSink",
+											"writeBehavior": "insert",
+											"sqlWriterUseTableLock": false,
+											"disableMetricsCollection": false
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"mappings": [
+												{
+													"source": {
+														"name": "FamilyCode",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "FamilyCode",
+														"type": "Int64",
+														"physicalType": "bigint"
+													}
+												},
+												{
+													"source": {
+														"name": "ChildCode",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "ChildCode",
+														"type": "Int32",
+														"physicalType": "int"
+													}
+												},
+												{
+													"source": {
+														"name": "ChildrenStatusID",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "ChildrenStatusID",
+														"type": "Int32",
+														"physicalType": "int"
+													}
+												},
+												{
+													"source": {
+														"name": "RegistrationDate",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "RegistrationDate",
+														"type": "DateTime",
+														"physicalType": "date"
+													}
+												},
+												{
+													"source": {
+														"name": "Birthdate",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Birthdate",
+														"type": "DateTime",
+														"physicalType": "date"
+													}
+												},
+												{
+													"source": {
+														"name": "FirstName",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "FirstName",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "EventStatusID",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "EventStatusID",
+														"type": "Int32",
+														"physicalType": "int"
+													}
+												},
+												{
+													"source": {
+														"name": "AgencyID",
+														"type": "String"
+													},
+													"sink": {
+														"name": "AgencyID",
+														"type": "Int32",
+														"physicalType": "int"
+													}
+												}
+											],
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "Registration",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "AzureSqlTable1",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									]
+								},
+								{
+									"name": "Copy data - FieldNotification",
+									"type": "Copy",
+									"dependsOn": [
+										{
+											"activity": "Copy data - Registration",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [
+										{
+											"name": "Sheet",
+											"value": "FieldNotification"
+										}
+									],
+									"typeProperties": {
+										"source": {
+											"type": "ExcelSource",
+											"storeSettings": {
+												"type": "AzureBlobStorageReadSettings",
+												"recursive": true,
+												"wildcardFolderPath": "INPUT",
+												"wildcardFileName": {
+													"value": "@item().name\r\n",
+													"type": "Expression"
+												},
+												"enablePartitionDiscovery": false
+											}
+										},
+										"sink": {
+											"type": "AzureSqlSink",
+											"writeBehavior": "upsert",
+											"upsertSettings": {
+												"useTempDB": true,
+												"keys": [
+													"ChildCode"
+												]
+											},
+											"sqlWriterUseTableLock": false,
+											"disableMetricsCollection": false
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"mappings": [
+												{
+													"source": {
+														"name": "ChildCode",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "ChildCode",
+														"type": "Int32",
+														"physicalType": "int"
+													}
+												},
+												{
+													"source": {
+														"name": "FieldNotifiedDate",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "FieldNotifiedDate",
+														"type": "DateTime",
+														"physicalType": "date"
+													}
+												},
+												{
+													"source": {
+														"name": "LastName",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "LastName",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "EventStatusID",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "EventStatusID",
+														"type": "Int32",
+														"physicalType": "int"
+													}
+												}
+											],
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "FieldNotification",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "AzureSqlTable1",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									]
+								},
+								{
+									"name": "Copy data - Dropped",
+									"type": "Copy",
+									"dependsOn": [
+										{
+											"activity": "Copy data - FieldNotification",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [
+										{
+											"name": "Sheet",
+											"value": "Dropped"
+										}
+									],
+									"typeProperties": {
+										"source": {
+											"type": "ExcelSource",
+											"storeSettings": {
+												"type": "AzureBlobStorageReadSettings",
+												"recursive": true,
+												"wildcardFolderPath": "INPUT",
+												"wildcardFileName": {
+													"value": "@item().name",
+													"type": "Expression"
+												},
+												"enablePartitionDiscovery": false
+											}
+										},
+										"sink": {
+											"type": "AzureSqlSink",
+											"writeBehavior": "upsert",
+											"upsertSettings": {
+												"useTempDB": true,
+												"keys": [
+													"ChildCode"
+												]
+											},
+											"sqlWriterUseTableLock": false,
+											"disableMetricsCollection": false
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"mappings": [
+												{
+													"source": {
+														"name": "ChildCode",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "ChildCode",
+														"type": "Int32",
+														"physicalType": "int"
+													}
+												},
+												{
+													"source": {
+														"name": "DroppedDate",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "DroppedDate",
+														"type": "DateTime",
+														"physicalType": "date"
+													}
+												},
+												{
+													"source": {
+														"name": "DroppedReasonID",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "DroppedReasonID",
+														"type": "Int32",
+														"physicalType": "int"
+													}
+												},
+												{
+													"source": {
+														"name": "DroppedReasonSubTypeID",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "DroppedReasonSubTypeID",
+														"type": "Int32",
+														"physicalType": "int"
+													}
+												},
+												{
+													"source": {
+														"name": "EventStatusID",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "EventStatusID",
+														"type": "Int32",
+														"physicalType": "int"
+													}
+												}
+											],
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "Dropped",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "AzureSqlTable1",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"SheetName": {
+						"type": "array",
+						"defaultValue": [
+							{
+								"SheetName": "Registration"
+							},
+							{
+								"SheetName": "FieldNotification"
+							},
+							{
+								"SheetName": "Dropped"
+							}
+						]
+					}
+				},
+				"variables": {
+					"AgencyID": {
+						"type": "String",
+						"defaultValue": "6631"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/InputFolder')]",
+				"[concat(variables('factoryId'), '/datasets/Registration')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]",
+				"[concat(variables('factoryId'), '/datasets/FieldNotification')]",
+				"[concat(variables('factoryId'), '/datasets/Dropped')]"
 			]
 		},
 		{
