@@ -683,15 +683,6 @@
 									"typeProperties": {
 										"source": {
 											"type": "ExcelSource",
-											"additionalColumns": [
-												{
-													"name": "AgencyID",
-													"value": {
-														"value": "6631",
-														"type": "Expression"
-													}
-												}
-											],
 											"storeSettings": {
 												"type": "AzureBlobStorageReadSettings",
 												"recursive": true,
@@ -838,6 +829,12 @@
 				"policy": {
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
+				},
+				"variables": {
+					"AgencyID": {
+						"type": "String",
+						"defaultValue": "6631"
+					}
 				},
 				"annotations": []
 			},
