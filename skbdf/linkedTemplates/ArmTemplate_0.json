@@ -241,6 +241,53 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Dropped')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Dropped",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "INPUT",
+						"container": "skbcontainer"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "DroppedDate",
+						"type": "String"
+					},
+					{
+						"name": "ChildCode",
+						"type": "String"
+					},
+					{
+						"name": "DroppedReasonID",
+						"type": "String"
+					},
+					{
+						"name": "DroppedReasonSubTypeID",
+						"type": "String"
+					},
+					{
+						"name": "EventStatusID",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ExcelInput')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -316,6 +363,32 @@
 						"type": "String"
 					}
 				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FieldNotification')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "FieldNotification",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "INPUT",
+						"container": "skbcontainer"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": []
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
@@ -398,79 +471,6 @@
 					"firstRowAsHeader": true
 				},
 				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/FieldNotification')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "FieldNotification",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": "INPUT",
-						"container": "skbcontainer"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Dropped')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "Dropped",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": "INPUT",
-						"container": "skbcontainer"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "DroppedDate",
-						"type": "String"
-					},
-					{
-						"name": "ChildCode",
-						"type": "String"
-					},
-					{
-						"name": "DroppedReasonID",
-						"type": "String"
-					},
-					{
-						"name": "DroppedReasonSubTypeID",
-						"type": "String"
-					},
-					{
-						"name": "EventStatusID",
-						"type": "String"
-					}
-				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
@@ -948,105 +948,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "ExcelInput",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "DelimitedText1",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						},
-						{
-							"dataset": {
-								"referenceName": "AzureSqlTableOutput",
-								"type": "DatasetReference"
-							},
-							"name": "sink2"
-						}
-					],
-					"transformations": [
-						{
-							"name": "split1"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          AgencyID as string,",
-						"          FamilyCode as string,",
-						"          ChildCode as string,",
-						"          ChildrenStatusID as string,",
-						"          RegistrationDate as string,",
-						"          FieldNotifiedDate as string,",
-						"          DroppedDate as string,",
-						"          DroppedReasonID as string,",
-						"          DroppedReasonSubTypeID as string,",
-						"          ChildrenID as string,",
-						"          Birthdate as string,",
-						"          FirstName as string,",
-						"          LastName as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false,",
-						"     moveFiles: ['/INPUT','OUTPUT']) ~> source1",
-						"source1 split(year(toDate(RegistrationDate))==2012,",
-						"     disjoint: true) ~> split1@(Year2012, YearOthers)",
-						"split1@Year2012 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     partitionFileNames:['File2012'],",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> sink1",
-						"split1@YearOthers sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          AgencyID as integer,",
-						"          FamilyCode as long,",
-						"          ChildCode as integer,",
-						"          ChildrenStatusID as integer,",
-						"          RegistrationDate as date,",
-						"          FieldNotifiedDate as date,",
-						"          DroppedDate as date,",
-						"          DroppedReasonID as integer,",
-						"          DroppedReasonSubTypeID as integer,",
-						"          ChildrenID as integer,",
-						"          Birthdate as date,",
-						"          FirstName as string,",
-						"          LastName as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     preSQLs:['TRUNCATE TABLE [dbo].[Child];'],",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink2"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ExcelInput')]",
-				"[concat(variables('factoryId'), '/datasets/DelimitedText1')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTableOutput')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/pipelineMultipleFilesSheets')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -1071,7 +972,7 @@
 								"parameters": {}
 							},
 							"fieldList": [
-								"itemName"
+								"childItems"
 							],
 							"storeSettings": {
 								"type": "AzureBlobStorageReadSettings",
@@ -1566,6 +1467,105 @@
 				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]",
 				"[concat(variables('factoryId'), '/datasets/FieldNotification')]",
 				"[concat(variables('factoryId'), '/datasets/Dropped')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ExcelInput",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DelimitedText1",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTableOutput",
+								"type": "DatasetReference"
+							},
+							"name": "sink2"
+						}
+					],
+					"transformations": [
+						{
+							"name": "split1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          AgencyID as string,",
+						"          FamilyCode as string,",
+						"          ChildCode as string,",
+						"          ChildrenStatusID as string,",
+						"          RegistrationDate as string,",
+						"          FieldNotifiedDate as string,",
+						"          DroppedDate as string,",
+						"          DroppedReasonID as string,",
+						"          DroppedReasonSubTypeID as string,",
+						"          ChildrenID as string,",
+						"          Birthdate as string,",
+						"          FirstName as string,",
+						"          LastName as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     moveFiles: ['/INPUT','OUTPUT']) ~> source1",
+						"source1 split(year(toDate(RegistrationDate))==2012,",
+						"     disjoint: true) ~> split1@(Year2012, YearOthers)",
+						"split1@Year2012 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     partitionFileNames:['File2012'],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink1",
+						"split1@YearOthers sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          AgencyID as integer,",
+						"          FamilyCode as long,",
+						"          ChildCode as integer,",
+						"          ChildrenStatusID as integer,",
+						"          RegistrationDate as date,",
+						"          FieldNotifiedDate as date,",
+						"          DroppedDate as date,",
+						"          DroppedReasonID as integer,",
+						"          DroppedReasonSubTypeID as integer,",
+						"          ChildrenID as integer,",
+						"          Birthdate as date,",
+						"          FirstName as string,",
+						"          LastName as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     preSQLs:['TRUNCATE TABLE [dbo].[Child];'],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink2"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ExcelInput')]",
+				"[concat(variables('factoryId'), '/datasets/DelimitedText1')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTableOutput')]"
 			]
 		},
 		{
