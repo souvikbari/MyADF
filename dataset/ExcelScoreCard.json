@@ -13,7 +13,8 @@
 				"folderPath": "SCOREBOARD/INPUT",
 				"container": "skbcontainer"
 			},
-			"sheetIndex": 0
+			"sheetIndex": 0,
+			"range": "A1:P35"
 		},
 		"schema": [
 			{
