@@ -1,0 +1,103 @@
+{
+	"name": "dfScoreBoard",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ExcelScoreBoard",
+						"type": "DatasetReference"
+					},
+					"name": "sourceScoreBoard"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTableScoreBoard",
+						"type": "DatasetReference"
+					},
+					"name": "sinkScoreBoard"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          Column_1 as string,",
+				"          Column_2 as string,",
+				"          Column_3 as string,",
+				"          Column_4 as string,",
+				"          Column_5 as string,",
+				"          Column_6 as string,",
+				"          Column_7 as string,",
+				"          Column_8 as string,",
+				"          Column_9 as string,",
+				"          Column_10 as string,",
+				"          Column_11 as string,",
+				"          Column_12 as string,",
+				"          Column_13 as string,",
+				"          Column_14 as string,",
+				"          Column_15 as string,",
+				"          Column_16 as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     moveFiles: ['/SCOREBOARD/INPUT','SCOREBOARD/OUTPUT'],",
+				"     rowUrlColumn: 'ExcelFileName') ~> sourceScoreBoard",
+				"sourceScoreBoard sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          F1 as string,",
+				"          F2 as string,",
+				"          F3 as string,",
+				"          F4 as double,",
+				"          F5 as double,",
+				"          F6 as double,",
+				"          F7 as double,",
+				"          F8 as double,",
+				"          F9 as double,",
+				"          F10 as double,",
+				"          F11 as double,",
+				"          F12 as double,",
+				"          F13 as double,",
+				"          F14 as double,",
+				"          F15 as double,",
+				"          F16 as double,",
+				"          ExcelFileName as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     preSQLs:['TRUNCATE TABLE [dbo].[stagingSCOREBOARD];'],",
+				"     dateFormat:'yyyy-MM-dd',",
+				"     timestampFormat:'yyyy-MM-dd\\'T\\'HH:mm:ss\\'Z\\'',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          F1 = Column_1,",
+				"          F2 = Column_2,",
+				"          F3 = Column_3,",
+				"          F4 = Column_4,",
+				"          F5 = Column_5,",
+				"          F6 = Column_6,",
+				"          F7 = Column_7,",
+				"          F8 = Column_8,",
+				"          F9 = Column_9,",
+				"          F10 = Column_10,",
+				"          F11 = Column_11,",
+				"          F12 = Column_12,",
+				"          F13 = Column_13,",
+				"          F14 = Column_14,",
+				"          F15 = Column_15,",
+				"          F16 = Column_16,",
+				"          ExcelFileName",
+				"     )) ~> sinkScoreBoard"
+			]
+		}
+	}
+}
