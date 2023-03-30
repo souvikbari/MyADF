@@ -1,5 +1,5 @@
 {
-	"name": "ExcelScoreCard",
+	"name": "ExcelScoreBoard",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
