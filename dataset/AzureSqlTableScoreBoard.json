@@ -1,0 +1,102 @@
+{
+	"name": "AzureSqlTableScoreBoard",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "F1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "F2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "F3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "F4",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "F5",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "F6",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "F7",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "F8",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "F9",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "F10",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "F11",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "F12",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "F13",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "F14",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "F15",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "F16",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "F17",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ExcelFileName",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "stagingSCOREBOARD"
+		}
+	}
+}
