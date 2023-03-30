@@ -25,7 +25,7 @@
 						],
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
+							"recursive": false,
 							"enablePartitionDiscovery": false
 						}
 					},
@@ -218,8 +218,8 @@
 							},
 							{
 								"source": {
-									"type": "String",
-									"ordinal": 17
+									"name": "FileName",
+									"type": "String"
 								},
 								"sink": {
 									"name": "ExcelFileName",
