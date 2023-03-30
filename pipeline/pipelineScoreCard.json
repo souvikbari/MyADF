@@ -26,8 +26,6 @@
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
-							"wildcardFolderPath": "SCOREBOARD/INPUT",
-							"wildcardFileName": "*SCOREBOARD*.XLSX",
 							"enablePartitionDiscovery": false
 						}
 					},
