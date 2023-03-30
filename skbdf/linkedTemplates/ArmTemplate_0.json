@@ -47,6 +47,19 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -214,113 +227,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlTableScoreBoard')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "F1",
-						"type": "nvarchar"
-					},
-					{
-						"name": "F2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "F3",
-						"type": "nvarchar"
-					},
-					{
-						"name": "F4",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "F5",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "F6",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "F7",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "F8",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "F9",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "F10",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "F11",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "F12",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "F13",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "F14",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "F15",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "F16",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "F17",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ExcelFileName",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "stagingSCOREBOARD"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -476,80 +382,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ExcelScoreCard')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": "SCOREBOARD/INPUT",
-						"container": "skbcontainer"
-					},
-					"sheetIndex": 0
-				},
-				"schema": [
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/FieldNotification')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -655,6 +487,184 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ExcelScoreBoard')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "January",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "SCOREBOARD January 2023.xlsx",
+						"folderPath": "SCOREBOARD/INPUT",
+						"container": "skbcontainer"
+					}
+				},
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTableScoreBoard')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "F1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "F2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "F3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "F4",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "F5",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "F6",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "F7",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "F8",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "F9",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "F10",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "F11",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "F12",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "F13",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "F14",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "F15",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "F16",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "ExcelFileName",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "stagingSCOREBOARD"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
 			]
 		},
 		{
@@ -1651,274 +1661,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pipelineScoreCard')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "ExcelSource",
-								"additionalColumns": [
-									{
-										"name": "FileName",
-										"value": "$$FILEPATH"
-									}
-								],
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"wildcardFolderPath": "SCOREBOARD/INPUT",
-									"wildcardFileName": "*SCOREBOARD*.XLSX",
-									"enablePartitionDiscovery": false
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "TRUNCATE TABLE [dbo].[stagingSCOREBOARD];",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 1
-										},
-										"sink": {
-											"name": "F1",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 2
-										},
-										"sink": {
-											"name": "F2",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 3
-										},
-										"sink": {
-											"name": "F3",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 4
-										},
-										"sink": {
-											"name": "F4",
-											"type": "Double",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 5
-										},
-										"sink": {
-											"name": "F5",
-											"type": "Double",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 6
-										},
-										"sink": {
-											"name": "F6",
-											"type": "Double",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 7
-										},
-										"sink": {
-											"name": "F7",
-											"type": "Double",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 8
-										},
-										"sink": {
-											"name": "F8",
-											"type": "Double",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 9
-										},
-										"sink": {
-											"name": "F9",
-											"type": "Double",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 10
-										},
-										"sink": {
-											"name": "F10",
-											"type": "Double",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 11
-										},
-										"sink": {
-											"name": "F11",
-											"type": "Double",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 12
-										},
-										"sink": {
-											"name": "F12",
-											"type": "Double",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 13
-										},
-										"sink": {
-											"name": "F13",
-											"type": "Double",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 14
-										},
-										"sink": {
-											"name": "F14",
-											"type": "Double",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 15
-										},
-										"sink": {
-											"name": "F15",
-											"type": "Double",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 16
-										},
-										"sink": {
-											"name": "F16",
-											"type": "Double",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 17
-										},
-										"sink": {
-											"name": "ExcelFileName",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "ExcelScoreCard",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "AzureSqlTableScoreBoard",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ExcelScoreCard')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTableScoreBoard')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -2015,6 +1757,115 @@
 				"[concat(variables('factoryId'), '/datasets/ExcelInput')]",
 				"[concat(variables('factoryId'), '/datasets/DelimitedText1')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlTableOutput')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dfScoreBoard')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ExcelScoreBoard",
+								"type": "DatasetReference"
+							},
+							"name": "sourceScoreBoard"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTableScoreBoard",
+								"type": "DatasetReference"
+							},
+							"name": "sinkScoreBoard"
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(output(",
+						"          Column_1 as string,",
+						"          Column_2 as string,",
+						"          Column_3 as string,",
+						"          Column_4 as string,",
+						"          Column_5 as string,",
+						"          Column_6 as string,",
+						"          Column_7 as string,",
+						"          Column_8 as string,",
+						"          Column_9 as string,",
+						"          Column_10 as string,",
+						"          Column_11 as string,",
+						"          Column_12 as string,",
+						"          Column_13 as string,",
+						"          Column_14 as string,",
+						"          Column_15 as string,",
+						"          Column_16 as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     moveFiles: ['/SCOREBOARD/INPUT','SCOREBOARD/OUTPUT'],",
+						"     rowUrlColumn: 'ExcelFileName') ~> sourceScoreBoard",
+						"sourceScoreBoard sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          F1 as string,",
+						"          F2 as string,",
+						"          F3 as string,",
+						"          F4 as double,",
+						"          F5 as double,",
+						"          F6 as double,",
+						"          F7 as double,",
+						"          F8 as double,",
+						"          F9 as double,",
+						"          F10 as double,",
+						"          F11 as double,",
+						"          F12 as double,",
+						"          F13 as double,",
+						"          F14 as double,",
+						"          F15 as double,",
+						"          F16 as double,",
+						"          ExcelFileName as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     preSQLs:['TRUNCATE TABLE [dbo].[stagingSCOREBOARD];'],",
+						"     dateFormat:'yyyy-MM-dd',",
+						"     timestampFormat:'yyyy-MM-dd\\'T\\'HH:mm:ss\\'Z\\'',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          F1 = Column_1,",
+						"          F2 = Column_2,",
+						"          F3 = Column_3,",
+						"          F4 = Column_4,",
+						"          F5 = Column_5,",
+						"          F6 = Column_6,",
+						"          F7 = Column_7,",
+						"          F8 = Column_8,",
+						"          F9 = Column_9,",
+						"          F10 = Column_10,",
+						"          F11 = Column_11,",
+						"          F12 = Column_12,",
+						"          F13 = Column_13,",
+						"          F14 = Column_14,",
+						"          F15 = Column_15,",
+						"          F16 = Column_16,",
+						"          ExcelFileName",
+						"     )) ~> sinkScoreBoard"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ExcelScoreBoard')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTableScoreBoard')]"
 			]
 		},
 		{
